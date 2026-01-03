@@ -36,9 +36,22 @@ namespace CRM.Web.Controllers
         [HttpGet]
         public ActionResult get()
         {
-
             var categories =  _dbContext.Category.ToList();
             return Ok(categories);
+        }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpGet]
+        [Route("Details")]
+        public ActionResult get(int id)
+        {
+            var category = _dbContext.Category.FirstOrDefault(x=>x.Id == id);
+
+            if (category == null) 
+            {
+                return NotFound();
+            }
+            return Ok(category);
         }
     }
 }
