@@ -16,21 +16,6 @@ namespace CRM.Web.Controllers
 
         }
 
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [HttpPost]
-        public ActionResult Create([FromBody] Models.Category category)
-        {
-
-            if(!ModelState.IsValid)
-            {
-                 return BadRequest(ModelState);
-            }
-            _dbContext.Category.Add(category);
-            _dbContext.SaveChanges();
-            return Ok(category);
-        }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet]
@@ -39,6 +24,7 @@ namespace CRM.Web.Controllers
             var categories =  _dbContext.Category.ToList();
             return Ok(categories);
         }
+
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet]
@@ -51,6 +37,39 @@ namespace CRM.Web.Controllers
             {
                 return NotFound();
             }
+            return Ok(category);
+        }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpPost]
+        public ActionResult Create([FromBody] Models.Category category)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            _dbContext.Category.Add(category);
+            _dbContext.SaveChanges();
+            return Ok(category);
+        }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpPut]
+        public ActionResult Update([FromBody] Models.Category category)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _dbContext.Category.Update(category);
+            _dbContext.SaveChanges();
             return Ok(category);
         }
     }
