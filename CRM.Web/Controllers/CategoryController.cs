@@ -72,5 +72,29 @@ namespace CRM.Web.Controllers
             _dbContext.SaveChanges();
             return Ok(category);
         }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpDelete]
+        public ActionResult Delete(int id)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = _dbContext.Category.FirstOrDefault(x => x.Id == id);
+
+            if(result == null)
+            {
+                return NotFound();
+            }
+
+            _dbContext.Category.Remove(result);
+            _dbContext.SaveChanges();
+            return Ok();
+        }
     }
 }
