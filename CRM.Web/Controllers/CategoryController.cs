@@ -31,5 +31,14 @@ namespace CRM.Web.Controllers
             _dbContext.SaveChanges();
             return Ok(category);
         }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpGet]
+        public ActionResult get()
+        {
+
+            var categories =  _dbContext.Category.ToList();
+            return Ok(categories);
+        }
     }
 }
